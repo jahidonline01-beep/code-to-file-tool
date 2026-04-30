@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code to File Tools</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <img src="icon.png" alt="Icon" class="app-icon" onerror="this.style.display='none'">
+        <div>
+          <h1>Code to File Tools</h1>
+          <span>Upload • Paste • Check • Preview • Download Flat ZIP</span>
+        </div>
+      </div>
+      <button id="clearAllBtn" class="btn danger">Clear All</button>
+    </header>
+
+    <section class="card import-card">
+      <textarea id="bulkInput" spellcheck="false" placeholder="Paste full code or project text here"></textarea>
+      <div class="actions">
+        <label class="btn upload">Upload Files<input id="fileInput" type="file" multiple /></label>
+        <button id="checkBtn" class="btn primary">Check</button>
+        <button id="addFileBtn" class="btn plus">+ Add File</button>
+        <button id="downloadBtn" class="btn success" disabled>Download Flat ZIP</button>
+      </div>
+    </section>
+
+    <main class="layout">
+      <section class="card files-card">
+        <div class="section-head">
+          <h2>Files</h2>
+          <span id="fileCount">0</span>
+        </div>
+        <div id="fileRows" class="file-rows"></div>
+      </section>
+
+      <section class="card preview-card">
+        <div class="section-head">
+          <h2>Code Preview</h2>
+          <select id="previewSelect"></select>
+        </div>
+        <pre id="codePreview"></pre>
+      </section>
+
+      <section class="card index-card">
+        <div class="section-head">
+          <h2>Index Preview</h2>
+          <button id="previewIndexBtn" class="btn small">Preview</button>
+        </div>
+        <iframe id="indexFrame" sandbox="allow-scripts allow-forms allow-modals allow-popups"></iframe>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

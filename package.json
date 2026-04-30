@@ -1,0 +1,56 @@
+{
+  "name": "code-to-file-tools",
+  "version": "13.0.0",
+  "description": "Clean desktop Code to File Tools with check-only workflow and fixed npm install GitHub Actions build.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "check": "node check-project.js",
+    "dist": "electron-builder --win nsis --x64 --publish=never"
+  },
+  "build": {
+    "appId": "com.code.to.file.tools",
+    "productName": "Code to File Tools",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "index.html",
+      "styles.css",
+      "app.js",
+      "main.js",
+      "preload.js",
+      "package.json",
+      "README.md",
+      "check-project.js",
+      "icon.png",
+      "icon.ico"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "Code-to-File-Tools-Setup-${version}.${ext}",
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "installerHeaderIcon": "icon.ico"
+    },
+    "asar": true
+  },
+  "devDependencies": {
+    "electron": "28.3.3",
+    "electron-builder": "24.13.3"
+  }
+}
