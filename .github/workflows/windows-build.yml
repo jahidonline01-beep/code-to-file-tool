@@ -1,0 +1,67 @@
+name: Windows Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Show root files
+        shell: pwsh
+        run: |
+          Get-ChildItem -Force
+          node -v
+          npm -v
+
+      - name: Clean npm cache
+        shell: pwsh
+        run: npm cache clean --force
+
+      - name: Install dependencies
+        shell: pwsh
+        run: npm install --no-package-lock --no-audit --no-fund --legacy-peer-deps
+
+      - name: Check project files
+        shell: pwsh
+        run: npm run check
+
+      - name: Build Windows installer
+        shell: pwsh
+        run: npm run dist
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+          ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES: true
+
+      - name: Show dist files
+        if: always()
+        shell: pwsh
+        run: |
+          if (Test-Path dist) {
+            Get-ChildItem dist -Recurse
+          } else {
+            Write-Host "dist folder not created"
+          }
+
+      - name: Upload Windows installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: Code-to-File-Tools-Windows-Setup
+          path: |
+            dist/*.exe
+            dist/*.blockmap
+          if-no-files-found: error
